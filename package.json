@@ -1,0 +1,94 @@
+{
+  "name": "storyweaver",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Private, offline visual storytelling studio",
+  "author": "StoryWeaver",
+  "license": "MIT",
+  "type": "module",
+  "main": "dist-electron/main.cjs",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "dev:web": "vite --host 0.0.0.0",
+    "build": "npm run typecheck && vite build && node scripts/build.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "start": "electron .",
+    "pack": "npm run build && electron-builder --dir",
+    "dist": "npm run build && electron-builder",
+    "lint": "eslint .",
+    "format": "prettier --write src electron tests scripts *.ts *.json *.js *.html",
+    "test:desktop": "node scripts/desktop-test.mjs"
+  },
+  "dependencies": {
+    "lucide-react": "^0.468.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "sharp": "^0.34.0",
+    "yauzl": "^3.2.0",
+    "yazl": "^3.3.1",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "@playwright/test": "^1.58.0",
+    "@tailwindcss/vite": "^4.1.0",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@types/yauzl": "^2.10.0",
+    "@types/yazl": "^3.3.0",
+    "@vitejs/plugin-react": "^5.1.0",
+    "electron": "^40.0.0",
+    "electron-builder": "^26.0.0",
+    "esbuild": "^0.27.0",
+    "eslint": "^9.39.5",
+    "prettier": "^3.9.10",
+    "tailwindcss": "^4.1.0",
+    "typescript": "^5.9.0",
+    "typescript-eslint": "^8.72.1",
+    "vite": "^7.3.0",
+    "vitest": "^4.0.0"
+  },
+  "build": {
+    "appId": "studio.storyweaver.desktop",
+    "productName": "StoryWeaver",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**",
+      "dist-electron/**",
+      "package.json"
+    ],
+    "asarUnpack": [
+      "node_modules/sharp/**",
+      "node_modules/@img/**"
+    ],
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Graphics",
+      "syncDesktopName": true
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "category": "public.app-category.graphics-design"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "icon": "public/icon.png"
+  },
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "desktopName": "storyweaver.desktop"
+}
